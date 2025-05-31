@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($useremail_err) && empty($password_err)) {
 
         // Prepare a SELECT statement
-        $sql = "SELECT id, useremail, password FROM users WHERE useremail = ?";
+        $sql = "SELECT id_user, useremail, password FROM users WHERE useremail = ?";
 
         if ($stmt = mysqli_prepare($koneksi, $sql)) {
             // Bind variables to the prepared statement as parameters
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
+                            $_SESSION["id_user"] = $id;
                             $_SESSION["useremail"] = $useremail;
 
                             // Redirect user to welcome page
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                         <div class="input-wrapper text-start">
                                             <div <?php echo (!empty($useremail_err)) ? 'has-error' : ''; ?>>
-                                                <input type="email" name="useremail" value="admin123@gmail.com" placeholder="Enter your mail" >
+                                                <input type="email" name="useremail" value="bayusatriowid@gmail.com" placeholder="Enter your mail" >
                                                 <span class="text-danger"><?php echo $useremail_err; ?></span>
                                             </div>
                                             <div <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>>
@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <div class="form-check">
 
                                             </div>
-                                            <a href="#">Lupa Passowrd?</a>
+                                            <a href="#">Lupa Password?</a>
                                         </div>
                                         <button type="submit" class="rts-btn btn-primary">Masuk</button>
                                         <p>Belum Punya Akun? <a class="ml--5" href="register.php">Buat Disini!</a></p>

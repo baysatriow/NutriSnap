@@ -1,12 +1,9 @@
 <?php
-// Include config file
 require_once "partials/config.php";
 
-// Initialize variables with empty values
 $useremail = $username = $password = $confirm_password = "";
 $useremail_err = $username_err = $password_err = $confirm_password_err = "";
 
-// Process form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate useremail
@@ -15,19 +12,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!filter_var($_POST["useremail"], FILTER_VALIDATE_EMAIL)) {
         $useremail_err = "Invalid email format.";
     } else {
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE useremail = ?";
+        $sql = "SELECT id_user FROM users WHERE useremail = ?";
 
         if ($stmt = mysqli_prepare($koneksi, $sql)) {
-            // Bind variables to the prepared statement as parameters
+            
             mysqli_stmt_bind_param($stmt, "s", $param_useremail);
 
-            // Set parameter
             $param_useremail = trim($_POST["useremail"]);
 
-            // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
-                // Store result
+                
                 mysqli_stmt_store_result($stmt);
 
                 if (mysqli_stmt_num_rows($stmt) == 1) {
@@ -58,49 +52,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password_err = "Password must have at least 8 characters.";
     } else {
         $password = trim($_POST["password"]);
-    }
-
-    // // Validate confirm password
-    // if (empty(trim($_POST["confirm_password"]))) {
-    //     $confirm_password_err = "Please confirm password.";
-    // } else {
-    //     $confirm_password = trim($_POST["confirm_password"]);
-    //     if ($password != $confirm_password) {
-    //         $confirm_password_err = "Password did not match.";
-    //     }
-    // }
-
-    // Check input errors before inserting into database
+    
     if (empty($useremail_err) && empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
 
         // Prepare an insert statement
         $sql = "INSERT INTO users (useremail, username, password, token) VALUES (?, ?, ?, ?)";
 
         if ($stmt = mysqli_prepare($koneksi, $sql)) {
-            // Bind variables to the prepared statement as parameters
+            
             mysqli_stmt_bind_param($stmt, "ssss", $param_useremail, $param_username, $param_password, $param_token);
 
-            // Set parameters
             $param_useremail = $useremail;
             $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_token = bin2hex(random_bytes(50)); // generate unique token
+            $param_password = password_hash($password, PASSWORD_DEFAULT);
+            $param_token = bin2hex(random_bytes(50));
 
-            // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
-                // Redirect to index page
                 header("location: index.php");
                 exit;
             } else {
                 echo "Something went wrong. Please try again later.";
             }
 
-            // Close statement
             mysqli_stmt_close($stmt);
         }
     }
 
-    // Close connection
     mysqli_close($koneksi);
 }
 ?>
@@ -160,8 +137,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-
-
 
     <!-- jquery Js -->
     <?php include 'partials/script.php'; ?>

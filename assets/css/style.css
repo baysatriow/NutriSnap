@@ -14619,7 +14619,7 @@ body.sal-disabled [data-sal|=flip] {
 }
 .header-area-one .logo img {
   min-width: max-content;
-  filter: brightness(0);
+  filter: brightness(1);
 }
 .header-area-one .left-logo-area {
   display: flex;
@@ -15763,7 +15763,7 @@ body.sal-disabled [data-sal|=flip] {
 .main-center-content-m-left .banner-badge {
   border-radius: 7px;
   padding: 40px;
-  background-image: url(../images/bg/01.jpg);
+  background-image: url(../images/banner/header_home.png);
   position: relative;
 }
 @media only screen and (max-width: 575px) {
@@ -15851,12 +15851,12 @@ body.sal-disabled [data-sal|=flip] {
 }
 .container-custom {
   max-width: 1072px;
-  margin: auto;
+  margin: 150px auto auto auto;
 }
 @media only screen and (max-width: 1199px) {
   .container-custom {
     max-width: 95%;
-    margin: auto;
+    margin: 150px auto auto auto;
   }
 }
 
@@ -17991,6 +17991,8 @@ body.modal-open {
 .main-image-big img {
   border-radius: 10px;
 }
+
+/* Start Dark Theme */
 
 [data-theme=dark] .rts-dark-light .in-light {
   display: none;

@@ -14,13 +14,13 @@
                 </div>
                 <p>Analisis Makanan</p>
             </a>
-            <a href="register.php" class="single-menu">
+            <a href="riwayat.php" class="single-menu">
                 <div class="icon">
                     <img src="assets/images/icons/07.png" alt="icons">
                 </div>
-                <p>Riwatat Analisis</p>
+                <p>Riwayat Analisis</p>
             </a>
-            <a href="register.php" class="single-menu">
+            <a href="rekomendasi.php" class="single-menu">
                 <div class="icon">
                     <img src="assets/images/icons/07.png" alt="icons">
                 </div>

@@ -481,10 +481,10 @@
 
 .container-custom{
     max-width: 1072px;
-    margin: auto;
+    margin: 150px auto auto auto;
     @media #{$smlg-device} {
         max-width: 95%;
-        margin: auto;
+        margin: 150px auto auto auto;
     }
 }
 

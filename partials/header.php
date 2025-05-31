@@ -1,12 +1,85 @@
+<style>    /* CSS untuk mengatur ukuran logo */
+
+.logo {
+    display: block;
+    max-width: 200px; /* Atur lebar maksimum sesuai kebutuhan */
+    height: auto;
+}
+
+.logo img {
+    width: 100%;
+    height: auto;
+    max-height: 60px; /* Atur tinggi maksimum sesuai kebutuhan */
+    object-fit: contain; /* Pastikan gambar tidak terpotong dan tetap proporsional */
+}
+/* CSS untuk avatar di header (sebelum dropdown) */
+.single_action__haeader .avatar {
+    width: 36px; /* Sesuaikan ukuran sesuai ikon header lainnya */
+    height: 36px; /* Sesuaikan ukuran sesuai ikon header lainnya */
+    border-radius: 50%; /* Membuatnya bulat */
+    overflow: hidden; /* Menyembunyikan bagian gambar yang keluar */
+    display: flex; /* Membantu centering gambar */
+    align-items: center;
+    justify-content: center;
+    background-color: #e9ecef; /* Warna latar belakang fallback */
+    cursor: pointer; /* Menunjukkan bisa diklik */
+}
+
+.single_action__haeader .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Memastikan gambar menutupi area */
+}
+/* CSS untuk mengatur avatar di dalam dropdown header */
+.user_information_main_wrapper .user_header .main-avatar {
+    width: 50px; /* Atur lebar avatar */
+    height: 50px; /* Atur tinggi avatar agar sama dengan lebar (untuk lingkaran) */
+    border-radius: 50%; /* Membuat bentuk lingkaran */
+    overflow: hidden; /* Menyembunyikan bagian gambar yang keluar dari lingkaran */
+    margin-right: 15px; /* Memberi jarak ke kanan (ke nama pengguna) */
+    flex-shrink: 0; /* Mencegah avatar menyusut jika teks panjang */
+    background-color: #e9ecef; /* Warna latar belakang fallback jika gambar error */
+}
+
+.user_information_main_wrapper .user_header .main-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Memastikan gambar menutupi area tanpa distorsi */
+    display: block;
+}
+
+/* Optional: Menyesuaikan layout user_header agar avatar dan teks sejajar */
+.user_information_main_wrapper .user_header {
+    display: flex; /* Menggunakan flexbox untuk alignment */
+    align-items: center; /* Menyelaraskan item secara vertikal di tengah */
+    padding: 15px; /* Menambah padding di sekitar header dropdown */
+    border-bottom: 1px solid #eee; /* Garis pemisah */
+}
+
+.user_information_main_wrapper .user_naim-information {
+    /* Tidak perlu style khusus jika flexbox sudah cukup */
+    line-height: 1.3; /* Sedikit penyesuaian line-height jika perlu */
+}
+
+.user_information_main_wrapper .user_naim-information .title {
+    margin-bottom: 2px; /* Mengurangi jarak bawah judul */
+    font-size: 1rem; /* Sesuaikan ukuran font jika perlu */
+}
+
+.user_information_main_wrapper .user_naim-information .desig {
+    font-size: 0.85rem; /* Ukuran font untuk username/designation */
+    color: #6c757d; /* Warna teks yang lebih lembut */
+}
+
+</style>
 <div class="header-area-one">
     <div class="container-30">
         <div class="col-lg-12">
             <div class="header-inner-one">
                 <div class="left-logo-area">
-                    <h3>NUTRISNAP</h3>
-                    <!-- <a href="index.php" class="logo">
-                        <img src="assets/images/logo/logo-01.png" alt="logo-image">
-                    </a> -->
+                    <a href="index.php" class="logo">
+                        <img src="assets/images/logo/Logo.png" alt="logo-image">
+                    </a>
                     <div class="left-side-open-clouse" id="collups-left">
                         <img src="assets/images/icons/01.svg" alt="icons">
                     </div>
@@ -43,16 +116,16 @@
                         </div>
                         <div class="single_action__haeader user_avatar__information openuptip" flow="down" tooltip="Profile">
                             <div class="avatar">
-                                <img src="assets/images/avatar/user.svg" alt="avatar">
+                                <img src="<?= $dataAkun['profile_image_path']?>" alt="avatar">
                             </div>
                             <div class="user_information_main_wrapper slide-down__click">
                                 <div class="user_header">
                                     <div class="main-avatar">
-                                        <img src="assets/images/avatar/user-2.svg" alt="user">
+                                        <img src="<?= $dataAkun['profile_image_path']?>" alt="user">
                                     </div>
                                     <div class="user_naim-information">
-                                        <h3 class="title">Mas Bayu</h3>
-                                        <span class="desig">CEO, Hidup Berkah</span>
+                                        <h3 class="title"><?= $dataAkun['first_name'] . " " . $dataAkun['last_name'] ?></h3>
+                                        <span class="desig"><?= $dataAkun['username']?></span>
                                     </div>
                                 </div>
                                 <div class="user_body_content">
