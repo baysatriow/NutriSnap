@@ -171,14 +171,19 @@ async function sendMessage() {
             }
         }
 
+        let displayText = fullResponseText;
+        if (!isValidNutritionResponse(fullResponseText) && fullResponseText.trim() !== "") {
+            displayText = "Maaf, saya hanya dapat memberikan informasi terkait gizi makanan dan pola makan.";
+        }
+
         let aiMessageForDB;
-        if (fullResponseText) {
+        if (displayText) {
             conversationHistoryForAPI.push({ role: 'model', parts: [{ text: fullResponseText }] });
             aiMessageForDB = {
                 user_id: currentUserIdFromPHP,
                 conversation_id: currentConversationId,
                 sender: 'model',
-                message: fullResponseText,
+                message: displayText,
                 image_data: null
             };
         } else {
@@ -199,11 +204,6 @@ async function sendMessage() {
             console.log("Respons AI disimpan ke DB.");
         } catch (error) {
             console.error("Gagal menyimpan respons AI ke DB:", error);
-        }
-
-        let displayText = fullResponseText;
-        if (!isValidNutritionResponse(fullResponseText) && fullResponseText.trim() !== "") {
-            displayText = "Maaf, saya hanya dapat memberikan informasi terkait gizi makanan dan pola makan.";
         }
 
         if (responseTextElement) {
@@ -373,7 +373,29 @@ function removeImage() {
 }
 
 function isValidNutritionResponse(response) {
-    if (!response || !response.trim()) return false;
+    if (!response || !response.trim()) {
+        console.log("Respons kosong atau hanya spasi.");
+        return false;
+    }
+
+    const lowerCaseResponse = response.toLowerCase();
+
+    const invalidKeywords = [
+        'paku', 'semen', 'bata', 'pasir', 'kayu', 'besi', 'kaca',
+        'mobil', 'motor', 'sepeda', 'ban', 'mesin', 'oli',
+        'buku pelajaran', 'novel', 'majalah', 'koran', 'pensil', 'pulpen',
+        'komputer', 'laptop', 'ponsel', 'televisi', 'radio',
+        'politik', 'ekonomi makro', 'saham', 'obligasi',
+        'sepak bola', 'basket',
+    ];
+
+    for (const keyword of invalidKeywords) {
+        if (lowerCaseResponse.includes(keyword.toLowerCase())) {
+            console.log(`Ditemukan kata kunci tidak valid: "${keyword}"`);
+            return false;
+        }
+    }
+
     const validKeywords = [
         'gizi', 'nutrisi', 'makanan sehat', 'pola makan', 'vitamin', 'mineral', 'diet', 'kalori',
         'protein', 'karbohidrat', 'lemak', 'serat', 'kandungan gizi', 'makronutrien', 'mikronutrien',
@@ -381,10 +403,19 @@ function isValidNutritionResponse(response) {
         'hidrasi', 'suplemen', 'label nutrisi', 'superfood', 'antioksidan', 'metabolisme',
         'energi', 'pencernaan', 'vegetarian', 'vegan', 'rendah gula', 'rendah garam',
         'tinggi protein', 'tinggi serat', 'masak sehat', 'bahan makanan', 'buah', 'sayur',
-        'kebutuhan kalori', 'kebutuhan gizi', 'sarapan', 'makan siang', 'makan malam', 'camilan'
+        'kebutuhan kalori', 'kebutuhan gizi', 'sarapan', 'makan siang', 'makan malam', 'camilan',
+        'air putih', 'elektrolit', 'asam amino', 'omega 3', 'probiotik', 'prebiotik',
+        'indeks massa tubuh', 'bmi', 'defisit kalori', 'surplus kalori', 'penambah berat badan',
+        'penurun berat badan', 'ahli gizi', 'nutrisionis', 'konsultasi gizi', 'jurnal makanan'
     ];
-    const lowerCaseResponse = response.toLowerCase();
-    return validKeywords.some(keyword => lowerCaseResponse.includes(keyword.toLowerCase()));
+
+    const foundValidKeyword = validKeywords.some(keyword => lowerCaseResponse.includes(keyword.toLowerCase()));
+
+    if (!foundValidKeyword) {
+        console.log("Tidak ditemukan kata kunci nutrisi yang valid.");
+    }
+
+    return foundValidKeyword;
 }
 
 async function loadChatHistory() {
