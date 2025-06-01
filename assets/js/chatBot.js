@@ -381,12 +381,7 @@ function isValidNutritionResponse(response) {
     const lowerCaseResponse = response.toLowerCase();
 
     const invalidKeywords = [
-        'paku', 'semen', 'bata', 'pasir', 'kayu', 'besi', 'kaca',
-        'mobil', 'motor', 'sepeda', 'ban', 'mesin', 'oli',
-        'buku pelajaran', 'novel', 'majalah', 'koran', 'pensil', 'pulpen',
-        'komputer', 'laptop', 'ponsel', 'televisi', 'radio',
-        'politik', 'ekonomi makro', 'saham', 'obligasi',
-        'sepak bola', 'basket',
+        'paku'
     ];
 
     for (const keyword of invalidKeywords) {
